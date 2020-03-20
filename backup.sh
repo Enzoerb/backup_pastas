@@ -1,3 +1,13 @@
+function check_parameters ()
+{
+  if [ ! -e "$MAIN_FOLDER" ]
+  then
+    echo folder does not exist
+    exit
+  fi
+}
+
+
 function format_folder_adress ()
 {
 
@@ -12,15 +22,15 @@ function format_folder_adress ()
 function create_backup_adress ()
 {
 
-  if [ ! -e "${MAIN_FOLDER}_backup" ] 
+  if [ ! -e "/${MAIN_FOLDER}_backup" ] 
   then
-    BACKUP_FOLDER="${MAIN_FOLDER}_backup"
+    BACKUP_FOLDER="/${MAIN_FOLDER}_backup"
   else
     for (( i=2; 0 == 0; i++ )); do
 
-      if [ ! -e "${MAIN_FOLDER}_backup(${i})" ]
+      if [ ! -e "/${MAIN_FOLDER}_backup(${i})" ]
       then
-        BACKUP_FOLDER="${MAIN_FOLDER}_backup(${i})"
+        BACKUP_FOLDER="/${MAIN_FOLDER}_backup(${i})"
         break
       fi
 
@@ -48,9 +58,11 @@ function compress_files ()
 
 }
 
+
 main ()
 {
 
+check_parameters
 format_folder_adress 
 create_backup_adress 
 mkdir "$BACKUP_FOLDER"
@@ -58,6 +70,7 @@ compress_files
 mv $MAIN_FOLDER/*.tar.gz "$BACKUP_FOLDER"
 
 }
+
 
 MAIN_FOLDER="$1"
 main
