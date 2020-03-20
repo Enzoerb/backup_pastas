@@ -1,33 +1,63 @@
-PASTA_ATUAL="$1"
+function format_folder_adress ()
+{
 
-if [ "${PASTA_ATUAL: -1}" == "/" ]; then
-  PASTA_ATUAL=${PASTA_ATUAL::-1}
-fi
+  if [ "${MAIN_FOLDER: -1}" == "/" ]
+  then
+    MAIN_FOLDER=${MAIN_FOLDER::-1}
+  fi
 
-if [ ! -e "/${PASTA_ATUAL}_backup" ]; then
-  PASTA_BACKUP="/${PASTA_ATUAL}_backup"
-else
-  i=2
-  for (( i=2; 0 == 0; i++ )); do
-    if [ ! -e "/${PASTA_ATUAL}_backup(${i})" ]; then
-      PASTA_BACKUP="/${PASTA_ATUAL}_backup(${i})"
-      break
-    fi
-  done
+}
+
+
+function create_backup_adress ()
+{
+
+  if [ ! -e "${MAIN_FOLDER}_backup" ] 
+  then
+    BACKUP_FOLDER="${MAIN_FOLDER}_backup"
+  else
+    for (( i=2; 0 == 0; i++ )); do
+
+      if [ ! -e "${MAIN_FOLDER}_backup(${i})" ]
+      then
+        BACKUP_FOLDER="${MAIN_FOLDER}_backup(${i})"
+        break
+      fi
+
+    done
+  fi
+
+}
+
+
+function compress_files ()
+{
+
+  PASTAS_FOR=${MAIN_FOLDER}/*
+  exception="$MAIN_FOLDER/target"
   
-fi
-mkdir "$PASTA_BACKUP"
-
-exception="$PASTA_ATUAL/target"
-PASTAS_FOR=${PASTA_ATUAL}/*
-
-for arquivo in $PASTAS_FOR
-do
-  
-  if [ "$arquivo" != "$exception" ]; then 
+  for arquivo in $PASTAS_FOR
+  do
     
-    tar -czf "${arquivo}.tar.gz" "$arquivo"
-    mv "${arquivo}.tar.gz" "${PASTA_BACKUP}"
+    if [ "$arquivo" != "$exception" ]
+    then 
+      tar -czf "${arquivo}.tar.gz" "$arquivo"
+    fi
+  
+  done
 
-  fi 
-done
+}
+
+main ()
+{
+
+format_folder_adress 
+create_backup_adress 
+mkdir "$BACKUP_FOLDER"
+compress_files 
+mv $MAIN_FOLDER/*.tar.gz "$BACKUP_FOLDER"
+
+}
+
+MAIN_FOLDER="$1"
+main
