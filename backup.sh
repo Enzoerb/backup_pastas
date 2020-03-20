@@ -1,10 +1,12 @@
 function check_parameters ()
 {
+
   if [ ! -e "$MAIN_FOLDER" ]
   then
     echo folder does not exist
     exit
   fi
+
 }
 
 
@@ -62,12 +64,12 @@ function compress_files ()
 main ()
 {
 
-check_parameters
-format_folder_adress 
-create_backup_adress 
-mkdir "$BACKUP_FOLDER"
-compress_files 
-mv $MAIN_FOLDER/*.tar.gz "$BACKUP_FOLDER"
+  check_parameters
+  format_folder_adress 
+  create_backup_adress 
+  mkdir "$BACKUP_FOLDER"
+  compress_files 
+  mv $MAIN_FOLDER/*.tar.gz "$BACKUP_FOLDER"
 
 }
 
