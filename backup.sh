@@ -9,8 +9,8 @@ if [ ! -e "/${PASTA_ATUAL}_backup" ]; then
 else
   i=2
   for (( i=2; 0 == 0; i++ )); do
-    if [ ! -e "/${PASTA_ATUAL}_backup${i}" ]; then
-      PASTA_BACKUP="/${PASTA_ATUAL}_backup${i}"
+    if [ ! -e "/${PASTA_ATUAL}_backup(${i})" ]; then
+      PASTA_BACKUP="/${PASTA_ATUAL}_backup(${i})"
       break
     fi
   done
