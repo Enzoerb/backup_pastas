@@ -24,15 +24,15 @@ function format_folder_adress ()
 function create_backup_adress ()
 {
 
-  if [ ! -e "\${MAIN_FOLDER}_backup" ] 
+  if [ ! -e "/${MAIN_FOLDER}_backup" ] 
   then
-    BACKUP_FOLDER="\${MAIN_FOLDER}_backup"
+    BACKUP_FOLDER="/${MAIN_FOLDER}_backup"
   else
     for (( i=2; 0 == 0; i++ )); do
 
-      if [ ! -e "\${MAIN_FOLDER}_backup(${i})" ]
+      if [ ! -e "/${MAIN_FOLDER}_backup(${i})" ]
       then
-        BACKUP_FOLDER="\${MAIN_FOLDER}_backup(${i})"
+        BACKUP_FOLDER="/${MAIN_FOLDER}_backup(${i})"
         break
       fi
 
